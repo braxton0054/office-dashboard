@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Office Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h1>📊 Office Dashboard</h1>
+        <span class="subtitle">Agent Activity Monitor</span>
+      </div>
+      <div class="header-right">
+        <div class="connection-status" id="connectionStatus">
+          <span class="dot dot-green"></span> Connected
+        </div>
+        <span class="clock" id="clock">--:--:--</span>
+      </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar" id="statsBar">
+      <div class="stat-card">
+        <span class="stat-label">Agents Online</span>
+        <span class="stat-value" id="statOnline">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Total Agents</span>
+        <span class="stat-value" id="statTotal">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Total Tokens</span>
+        <span class="stat-value" id="statTokens">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Activity (24h)</span>
+        <span class="stat-value" id="statActivity">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">CPU Load</span>
+        <span class="stat-value" id="statCpu">0%</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">RAM</span>
+        <span class="stat-value" id="statRam">0%</span>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-grid">
+      <!-- Agent Cards -->
+      <section class="card agents-section">
+        <div class="card-header">
+          <h2>🤖 Agents</h2>
+          <span class="badge" id="agentBadge">0</span>
+        </div>
+        <div class="agent-grid" id="agentGrid">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Activity Feed -->
+      <section class="card activity-section">
+        <div class="card-header">
+          <h2>📋 Recent Activity</h2>
+        </div>
+        <div class="activity-feed" id="activityFeed">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Charts -->
+      <section class="card chart-section">
+        <div class="card-header">
+          <h2>📈 System Load</h2>
+        </div>
+        <div class="chart-container">
+          <canvas id="loadChart"></canvas>
+        </div>
+      </section>
+
+      <!-- System Info -->
+      <section class="card system-section">
+        <div class="card-header">
+          <h2>🖥️ System</h2>
+        </div>
+        <div class="system-info" id="systemInfo">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
