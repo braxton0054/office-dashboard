@@ -155,15 +155,15 @@ function updateChart(history) {
         {
           label: 'CPU',
           data: history.map(h => h.cpu_load || 0),
-          borderColor: '#3b82f6',
-          backgroundColor: 'rgba(59,130,246,0.06)',
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37,99,235,0.06)',
           fill: true, tension: 0.35, pointRadius: 0, borderWidth: 2,
         },
         {
           label: 'RAM',
           data: history.map(h => h.ram_used_pct || 0),
-          borderColor: '#22c55e',
-          backgroundColor: 'rgba(34,197,94,0.06)',
+          borderColor: '#16a34a',
+          backgroundColor: 'rgba(22,163,74,0.06)',
           fill: true, tension: 0.35, pointRadius: 0, borderWidth: 2,
         },
       ],
@@ -173,16 +173,16 @@ function updateChart(history) {
       maintainAspectRatio: false,
       animation: { duration: 300 },
       plugins: {
-        legend: { labels: { color: '#7a7d91', font: { family: "'JetBrains Mono', monospace", size: 11 }, boxWidth: 12, padding: 12 } },
+        legend: { labels: { color: '#64748b', font: { family: "'JetBrains Mono', monospace", size: 11 }, boxWidth: 12, padding: 12 } },
       },
       scales: {
         x: {
-          ticks: { color: '#4a4d60', font: { family: "'JetBrains Mono', monospace", size: 9 }, maxTicksLimit: 10 },
-          grid: { color: 'rgba(30,30,48,0.5)' },
+          ticks: { color: '#94a3b8', font: { family: "'JetBrains Mono', monospace", size: 9 }, maxTicksLimit: 10 },
+          grid: { color: 'rgba(226,232,240,0.5)' },
         },
         y: {
-          ticks: { color: '#4a4d60', font: { family: "'JetBrains Mono', monospace", size: 9 } },
-          grid: { color: 'rgba(30,30,48,0.5)' },
+          ticks: { color: '#94a3b8', font: { family: "'JetBrains Mono', monospace", size: 9 } },
+          grid: { color: 'rgba(226,232,240,0.5)' },
           beginAtZero: true,
         },
       },
@@ -208,15 +208,10 @@ async function fetchAll() {
     if (system) renderSystem(system);
     if (Array.isArray(history)) updateChart(history);
 
-    // Terminal line
     const now = new Date();
     document.getElementById('lastUpdate').textContent = `⏱ ${now.toLocaleTimeString('en-US', { hour12: false })}`;
-    document.getElementById('connStatus').querySelector('.conn-dot').style.background = 'var(--green)';
-    document.getElementById('connStatus').querySelector('.conn-dot').style.boxShadow = '0 0 6px var(--green)';
-    document.getElementById('connStatus').querySelector('.conn-label').textContent = 'Live';
   } catch (err) {
     document.getElementById('connStatus').querySelector('.conn-dot').style.background = 'var(--red)';
-    document.getElementById('connStatus').querySelector('.conn-dot').style.boxShadow = '0 0 6px var(--red)';
     document.getElementById('connStatus').querySelector('.conn-label').textContent = 'Offline';
   }
 }
