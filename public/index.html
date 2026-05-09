@@ -1,97 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Office Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <!-- Header -->
-    <header class="header">
-      <div class="header-left">
-        <h1>📊 Office Dashboard</h1>
-        <span class="subtitle">Agent Activity Monitor</span>
-      </div>
-      <div class="header-right">
-        <div class="connection-status" id="connectionStatus">
-          <span class="dot dot-green"></span> Connected
+  <div class="dashboard">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo-mark">◈</div>
+        <div class="brand">
+          <h1 class="brand-title">Office Dashboard</h1>
+          <span class="brand-sub">Agent Activity Monitor</span>
         </div>
-        <span class="clock" id="clock">--:--:--</span>
+      </div>
+      <div class="topbar-center">
+        <div class="terminal-line">
+          <span class="prompt">$</span>
+          <span class="cmd" id="termCmd">system.status</span>
+          <span class="output" id="lastUpdate">--:--:--</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="conn-status" id="connStatus">
+          <span class="conn-dot"></span>
+          <span class="conn-label">Live</span>
+        </div>
+        <div class="top-clock" id="topClock">--:--:--</div>
       </div>
     </header>
 
-    <!-- Stats Bar -->
-    <section class="stats-bar" id="statsBar">
-      <div class="stat-card">
-        <span class="stat-label">Agents Online</span>
-        <span class="stat-value" id="statOnline">0</span>
+    <!-- Stats Row -->
+    <section class="stats-row" id="statsRow">
+      <div class="stat-tile">
+        <span class="stat-num" id="statOnline">0</span>
+        <span class="stat-label">Online</span>
+        <span class="stat-glow" style="background:#22c55e"></span>
       </div>
-      <div class="stat-card">
+      <div class="stat-tile">
+        <span class="stat-num" id="statTotal">0</span>
         <span class="stat-label">Total Agents</span>
-        <span class="stat-value" id="statTotal">0</span>
+        <span class="stat-glow" style="background:#6b7280"></span>
       </div>
-      <div class="stat-card">
-        <span class="stat-label">Total Tokens</span>
-        <span class="stat-value" id="statTokens">0</span>
+      <div class="stat-tile">
+        <span class="stat-num" id="statTokens">0</span>
+        <span class="stat-label">Tokens Used</span>
+        <span class="stat-glow" style="background:#d4a043"></span>
       </div>
-      <div class="stat-card">
-        <span class="stat-label">Activity (24h)</span>
-        <span class="stat-value" id="statActivity">0</span>
+      <div class="stat-tile">
+        <span class="stat-num" id="statActivity">0</span>
+        <span class="stat-label">Activity 24h</span>
+        <span class="stat-glow" style="background:#41d4b0"></span>
       </div>
-      <div class="stat-card">
+      <div class="stat-tile">
+        <span class="stat-num" id="statCpu">0%</span>
         <span class="stat-label">CPU Load</span>
-        <span class="stat-value" id="statCpu">0%</span>
+        <span class="stat-glow" style="background:#d4a043"></span>
       </div>
-      <div class="stat-card">
+      <div class="stat-tile">
+        <span class="stat-num" id="statRam">0%</span>
         <span class="stat-label">RAM</span>
-        <span class="stat-value" id="statRam">0%</span>
+        <span class="stat-glow" style="background:#41d4b0"></span>
       </div>
     </section>
 
-    <!-- Main Content -->
+    <!-- Main Grid -->
     <div class="main-grid">
       <!-- Agent Cards -->
-      <section class="card agents-section">
-        <div class="card-header">
+      <section class="panel panel-agents">
+        <div class="panel-head">
           <h2>🤖 Agents</h2>
-          <span class="badge" id="agentBadge">0</span>
+          <span class="panel-badge" id="agentBadge">0/0</span>
         </div>
-        <div class="agent-grid" id="agentGrid">
-          <!-- Rendered by JS -->
-        </div>
+        <div class="agent-grid" id="agentGrid"></div>
       </section>
 
       <!-- Activity Feed -->
-      <section class="card activity-section">
-        <div class="card-header">
-          <h2>📋 Recent Activity</h2>
+      <section class="panel panel-activity">
+        <div class="panel-head">
+          <h2>📋 Activity Feed</h2>
+          <span class="panel-badge" id="activityBadge">0</span>
         </div>
-        <div class="activity-feed" id="activityFeed">
-          <!-- Rendered by JS -->
-        </div>
+        <div class="activity-feed" id="activityFeed"></div>
       </section>
 
-      <!-- Charts -->
-      <section class="card chart-section">
-        <div class="card-header">
+      <!-- System Chart -->
+      <section class="panel panel-chart">
+        <div class="panel-head">
           <h2>📈 System Load</h2>
         </div>
-        <div class="chart-container">
+        <div class="chart-wrap">
           <canvas id="loadChart"></canvas>
         </div>
       </section>
 
       <!-- System Info -->
-      <section class="card system-section">
-        <div class="card-header">
-          <h2>🖥️ System</h2>
+      <section class="panel panel-sysinfo">
+        <div class="panel-head">
+          <h2>🖥 System</h2>
         </div>
-        <div class="system-info" id="systemInfo">
-          <!-- Rendered by JS -->
-        </div>
+        <div class="sys-grid" id="sysGrid"></div>
       </section>
     </div>
   </div>
